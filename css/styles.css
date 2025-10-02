@@ -1,115 +1,121 @@
 th,h1,h2,tbody,td,tr{
-    font-family: sans-serif;  /*que es esto*/ 
+    font-family: sans-serif;  /* Cambia el tipo de letra a "sans-serif", es decir, letras sin patitas */
 }
+
 .titulo{
-    text-align: center;    /* que es esto */
-    align-items: center;   /* que es esto */
-    display: flex;         /* que es esto */
-    justify-content: space-around;   /* que es esto */
+    text-align: center;    /* Centra el texto horizontalmente */
+    align-items: center;   /* Alinea los elementos hijos verticalmente (solo funciona con display:flex) */
+    display: flex;         /* Convierte el contenedor en un "flexbox", para organizar elementos de forma flexible */
+    justify-content: space-around;   /* Distribuye los elementos con espacio igual alrededor */
 }
+
 .titulo1{
-    margin: 0;   /* que es esto */
+    margin: 0;   /* Elimina los márgenes externos del h1 */
 }
 .subtitulo1{
-    margin: 0;   /* que es esto */
+    margin: 0;   /* Elimina los márgenes externos del h2 */
 }
-.logoIzq{
-    width: 100%;   /*que es esto*/
-    max-width: 60px;   /*que es esto*/
-    height: auto;     /*que es esto*/
-    margin-right: 20px;   /*que es esto*/
-    position: absolute;    /*que es esto*/ 
+
+.logoIzq, .logoDer{
+    width: 100%;   /* La imagen ocupa el 100% del ancho disponible (antes de aplicar max-width) */
+    max-width: 60px;   /* Pero nunca será más ancha de 60 píxeles */
+    height: auto;     /* Ajusta la altura automáticamente manteniendo la proporción */
+    margin-right: 20px;   /* Agrega espacio a la derecha de la imagen */
+    position: absolute;    /* Posiciona la imagen de forma absoluta respecto al body o contenedor padre */
 }
 .logoDer{
-    width: 100%;   /*que es esto*/
-    max-width: 60px;   /*que es esto*/
-    height: auto;     /*que es esto*/
-    margin-right: 20px;   /*que es esto*/
-    position: absolute;    /*que es esto*/ 
-    right: 0;    /*que es esto*/ 
-    top: 10px;   /*que es esto*/ 
+    right: 0;    /* La imagen se pega al borde derecho */
+    top: 10px;   /* Se separa 10px desde arriba */
 }
+
 .listadoProductos{
-    font-size: x-large;     /*que es esto*/ 
-    height: 60vh;          /*que es esto*/ 
-    max-height: 80vh;     /*que es esto*/ 
-    overflow-y: auto;      /*que es esto*/ 
-    border: 1px solid black;     /*que es esto*/ 
+    font-size: x-large;     /* Texto más grande */
+    height: 60vh;          /* Altura = 60% de la pantalla (viewport height) */
+    max-height: 80vh;     /* Pero nunca pasará de 80% de la pantalla */
+    overflow-y: auto;      /* Si el contenido excede la altura, agrega scroll vertical */
+    border: 1px solid black;     /* Borde negro de 1px alrededor */
 }
+
 #listado{
-    max-height: 50%;       /*que es esto*/ 
-    width: 100%;       /*que es esto*/ 
-    font-size: larger;
+    max-height: 50%;       /* Limita altura máxima de la tabla al 50% de su contenedor */
+    width: 100%;           /* La tabla ocupa todo el ancho disponible */
+    font-size: larger;     /* Texto un poco más grande */
 }
+
 #bdContenido{
-    max-height: 10%;    /*que es esto*/ 
-    width: 100%;   /*que es esto*/ 
-    font-size: larger;    /*que es esto*/ 
+    max-height: 10%;    /* Altura máxima de 10% (aunque un tbody normalmente crece con las filas) */
+    width: 100%;        /* Ocupa todo el ancho */
+    font-size: larger;  /* Texto más grande */
 }
+
 .escaner{
-    font-size: x-large;     /*que es esto*/
-    width: calc(100% - 8px);   /*que es esto*/
-    height: 50px;       /*que es esto*/
-    font-size: xx-large;      /*que es esto*/
+    font-size: x-large;     /* Texto grande */
+    width: calc(100% - 8px);   /* Ancho igual al 100% menos 8px (para no salirse del contenedor) */
+    height: 50px;           /* Alto fijo de 50 píxeles */
+    font-size: xx-large;    /* Texto aún más grande (sobrescribe el anterior) */
 }
+
 .botones{
-    display: flex;     /*que es esto*/
-    align-items: center;     /*que es esto*/
-    margin-top: 10px;
+    display: flex;         /* Pone los botones en una fila (flexbox) */
+    align-items: center;   /* Alinea los botones verticalmente al centro */
+    margin-top: 10px;      /* Deja un espacio arriba */
 }
+
 .boton{
-    height: 15vh;    /*que es esto*/
-    width: 20vh;   /*que es esto*/
-    background-size: cover;   /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    background-position: center;   /*que es esto*/
-    cursor: pointer;     /*que es esto*/
+    height: 15vh;              /* Altura de 15% de la pantalla */
+    width: 20vh;               /* Ancho de 20% de la pantalla */
+    background-size: cover;    /* La imagen de fondo cubre todo el botón */
+    background-repeat: no-repeat; /* La imagen no se repite */
+    background-position: center;  /* La imagen se centra dentro del botón */
+    cursor: pointer;           /* El cursor cambia a "mano" al pasar encima */
 }
+
 #btn1{
-    background-image: url(../img/img3.png);    /*que es esto*/ 
-    background-size: 70%;     /*que es esto*/
-    background-position: center;     /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    padding: 10px;     /*que es esto*/
+    background-image: url(../img/img3.png);    /* Usa esta imagen como fondo */
+    background-size: 70%;     /* La imagen ocupa el 70% del botón */
+    background-position: center;  /* Centra la imagen dentro del botón */
+    background-repeat: no-repeat; /* No repite la imagen */
+    padding: 10px;     /* Espacio interno de 10px */
 }
+/* los demas botones son igual que el btn1 */
 #btn2{
-    background-image: url(../img/img4.png);    /*que es esto*/ 
-    background-size: 70%;     /*que es esto*/
-    background-position: center;     /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    padding: 10px;     /*que es esto*/
+    background-image: url(../img/img4.png);    
+    background-size: 70%;     
+    background-position: center;     
+    background-repeat: no-repeat;     
+    padding: 10px;     
 }
 #btn3{
-    background-image: url(../img/img5.png);    /*que es esto*/ 
-    background-size: 70%;     /*que es esto*/
-    background-position: center;     /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    padding: 10px;     /*que es esto*/
+    background-image: url(../img/img5.png);    
+    background-size: 70%;     
+    background-position: center;     
+    background-repeat: no-repeat;     
+    padding: 10px;     
 }
 
 #btn4{
-    background-image: url(../img/img6.png);    /*que es esto*/ 
-    background-size: 70%;     /*que es esto*/
-    background-position: center;     /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    padding: 10px;     /*que es esto*/
+    background-image: url(../img/img6.png);    
+    background-size: 70%;     
+    background-position: center;     
+    background-repeat: no-repeat;     
+    padding: 10px;     
 }
 
 #btn5{
-    background-image: url(../img/img7.png);    /*que es esto*/ 
-    background-size: 70%;     /*que es esto*/
-    background-position: center;     /*que es esto*/
-    background-repeat: no-repeat;     /*que es esto*/
-    padding: 10px;     /*que es esto*/
+    background-image: url(../img/img7.png);    
+    background-size: 70%;     
+    background-position: center;     
+    background-repeat: no-repeat;     
+    padding: 10px;     
 }
 
 .total{
-    display: flex;     /*que es esto*/
-    border: 2px solid black;  /*que es esto*/
-    width: 30%;  /*que es esto*/
-    height: 5vw;  /*que es esto*/
-    margin-left: auto;  /*que es esto*/
-    font-size: xx-large;  /*que es esto*/
-    align-items: center;  /*que es esto*/
-    justify-content: center;  /*que es esto*/
+    display: flex;          /* Flexbox para alinear contenido */
+    border: 2px solid black; /* Borde negro de 2px */
+    width: 30%;             /* Ocupa el 30% del ancho disponible */
+    height: 5vw;            /* Altura = 5% del ancho de la pantalla (viewport width) */
+    margin-left: auto;      /* Empuja el div hacia la derecha */
+    font-size: xx-large;    /* Texto muy grande */
+    align-items: center;    /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
 }

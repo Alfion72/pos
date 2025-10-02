@@ -6,6 +6,7 @@
     <title>Punto de venta</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
+<script src="js/function.js"></script>
 <body>
     <!-- imagen en la esquina superior izquierda -->
         <img src="./img/img1.jpg" class="logoIzq">
@@ -34,7 +35,12 @@
         </table>
     </div>
     <!-- input para introducir codigo -->
-    <input type="text" id="txtCodigo" class="escaner" onkeydown="bucarProducto"/>
+    <input 
+        type="text" 
+        id="txtCodigo" 
+        class="escaner" 
+        placeholder="Introduzca su código"
+        onkeydown="buscarProductoPorCodigo(event)"/>
     <!-- botones con imagen -->
     <div class="botones">
         <input type="button" id="btn1" class="boton"/>
@@ -47,6 +53,6 @@
         </div>
     </div>
     <!-- en esta area va a aparecer el total -->
-
+<script src="js/function.js"></script>
 </body>
 </html>
