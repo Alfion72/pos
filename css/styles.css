@@ -1,0 +1,115 @@
+th,h1,h2,tbody,td,tr{
+    font-family: sans-serif;  /*que es esto*/ 
+}
+.titulo{
+    text-align: center;    /* que es esto */
+    align-items: center;   /* que es esto */
+    display: flex;         /* que es esto */
+    justify-content: space-around;   /* que es esto */
+}
+.titulo1{
+    margin: 0;   /* que es esto */
+}
+.subtitulo1{
+    margin: 0;   /* que es esto */
+}
+.logoIzq{
+    width: 100%;   /*que es esto*/
+    max-width: 60px;   /*que es esto*/
+    height: auto;     /*que es esto*/
+    margin-right: 20px;   /*que es esto*/
+    position: absolute;    /*que es esto*/ 
+}
+.logoDer{
+    width: 100%;   /*que es esto*/
+    max-width: 60px;   /*que es esto*/
+    height: auto;     /*que es esto*/
+    margin-right: 20px;   /*que es esto*/
+    position: absolute;    /*que es esto*/ 
+    right: 0;    /*que es esto*/ 
+    top: 10px;   /*que es esto*/ 
+}
+.listadoProductos{
+    font-size: x-large;     /*que es esto*/ 
+    height: 60vh;          /*que es esto*/ 
+    max-height: 80vh;     /*que es esto*/ 
+    overflow-y: auto;      /*que es esto*/ 
+    border: 1px solid black;     /*que es esto*/ 
+}
+#listado{
+    max-height: 50%;       /*que es esto*/ 
+    width: 100%;       /*que es esto*/ 
+    font-size: larger;
+}
+#bdContenido{
+    max-height: 10%;    /*que es esto*/ 
+    width: 100%;   /*que es esto*/ 
+    font-size: larger;    /*que es esto*/ 
+}
+.escaner{
+    font-size: x-large;     /*que es esto*/
+    width: calc(100% - 8px);   /*que es esto*/
+    height: 50px;       /*que es esto*/
+    font-size: xx-large;      /*que es esto*/
+}
+.botones{
+    display: flex;     /*que es esto*/
+    align-items: center;     /*que es esto*/
+    margin-top: 10px;
+}
+.boton{
+    height: 15vh;    /*que es esto*/
+    width: 20vh;   /*que es esto*/
+    background-size: cover;   /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    background-position: center;   /*que es esto*/
+    cursor: pointer;     /*que es esto*/
+}
+#btn1{
+    background-image: url(../img/img3.png);    /*que es esto*/ 
+    background-size: 70%;     /*que es esto*/
+    background-position: center;     /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    padding: 10px;     /*que es esto*/
+}
+#btn2{
+    background-image: url(../img/img4.png);    /*que es esto*/ 
+    background-size: 70%;     /*que es esto*/
+    background-position: center;     /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    padding: 10px;     /*que es esto*/
+}
+#btn3{
+    background-image: url(../img/img5.png);    /*que es esto*/ 
+    background-size: 70%;     /*que es esto*/
+    background-position: center;     /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    padding: 10px;     /*que es esto*/
+}
+
+#btn4{
+    background-image: url(../img/img6.png);    /*que es esto*/ 
+    background-size: 70%;     /*que es esto*/
+    background-position: center;     /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    padding: 10px;     /*que es esto*/
+}
+
+#btn5{
+    background-image: url(../img/img7.png);    /*que es esto*/ 
+    background-size: 70%;     /*que es esto*/
+    background-position: center;     /*que es esto*/
+    background-repeat: no-repeat;     /*que es esto*/
+    padding: 10px;     /*que es esto*/
+}
+
+.total{
+    display: flex;     /*que es esto*/
+    border: 2px solid black;  /*que es esto*/
+    width: 30%;  /*que es esto*/
+    height: 5vw;  /*que es esto*/
+    margin-left: auto;  /*que es esto*/
+    font-size: xx-large;  /*que es esto*/
+    align-items: center;  /*que es esto*/
+    justify-content: center;  /*que es esto*/
+}
