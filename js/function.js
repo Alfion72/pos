@@ -105,61 +105,82 @@ let totalProductos = 0;
 
 // Función para buscar producto por código
 function buscarProductoPorCodigo(evento) {
-if (evento.key === "Enter") {
-    let codigoCompleto = document.getElementById("txtCodigo").value;
+    if (evento.key === "Enter") {
+        let codigoCompleto = document.getElementById("txtCodigo").value;
 
-    if (codigoCompleto.length > 0) {
-        let cantidad = 1;
-        let codigo = codigoCompleto;
+        if (codigoCompleto.length > 0) {
+            let cantidad = 1;
+            let codigo = codigoCompleto;
 
-            // Verificar si hay multiplicación (formato: cantidad*codigo)
-            if (codigoCompleto.indexOf("*") !== -1) {
-            const partes = codigoCompleto.split("*");
-            cantidad = parseInt(partes[0]) || 1;
-            codigo = partes[1];
-            }
+                // Verificar si hay multiplicación (formato: cantidad*codigo)
+                if (codigoCompleto.indexOf("*") !== -1) {
+                const partes = codigoCompleto.split("*");
+                cantidad = parseInt(partes[0]) || 1;
+                codigo = partes[1];
+                }
 
-            for (let i = 0; i < productos.length; i++) {
-                if (productos[i][0] === codigo) {
-                    const tabla = document.getElementById("bdContenido");
-                    const renglon = tabla.insertRow();
-                    const celdaCantidad = renglon.insertCell(0);
-                    const celdaNombre = renglon.insertCell(1);
-                    const celdaPrecio = renglon.insertCell(2);
-                    const celdaTotal = renglon.insertCell(3);
+                for (let i = 0; i < productos.length; i++) {
+                    if (productos[i][0] === codigo) {
+                        const tabla = document.getElementById("bdContenido");
+                        const renglon = tabla.insertRow();
+                        const celdaCantidad = renglon.insertCell(0);
+                        const celdaNombre = renglon.insertCell(1);
+                        const celdaPrecio = renglon.insertCell(2);
+                        const celdaTotal = renglon.insertCell(3);
 
-                    // Aplicar estilos
-                    celdaCantidad.setAttribute("style", "text-align: center;");
-                    celdaNombre.setAttribute("style", "text-align: center;");
-                    celdaPrecio.setAttribute("style", "text-align: center;");
-                    celdaTotal.setAttribute("style", "text-align: center;");
+                        // Aplicar estilos
+                        celdaCantidad.setAttribute("style", "text-align: center;");
+                        celdaNombre.setAttribute("style", "text-align: center;");
+                        celdaPrecio.setAttribute("style", "text-align: center;");
+                        celdaTotal.setAttribute("style", "text-align: center;");
 
-                    // Calcular el subtotal del producto
-                    const subtotal = productos[i][2] * cantidad;
+                        // Calcular el subtotal del producto
+                        const subtotal = productos[i][2] * cantidad;
 
-                    // Llenar las celdas
-                    celdaCantidad.innerHTML = cantidad;
-                    celdaNombre.innerHTML = productos[i][1];
-                    celdaPrecio.innerHTML = `$${productos[i][2]}`;
-                    celdaTotal.innerHTML = `$${subtotal.toFixed(2)}`;
+                        // Llenar las celdas
+                        celdaCantidad.innerHTML = cantidad;
+                        celdaNombre.innerHTML = productos[i][1];
+                        celdaPrecio.innerHTML = `$${productos[i][2]}`;
+                        celdaTotal.innerHTML = `$${subtotal.toFixed(2)}`;
 
-                    // Agregar al total general
-                    totalProductos += subtotal;
+                        // Agregar al total general
+                        totalProductos += subtotal;
 
-                    // Actualizar la visualización del total
-                    const elementoTotal = document.getElementById("total");
-                    if (elementoTotal) {
-                    elementoTotal.innerHTML = `Total: $${totalProductos.toFixed(2)}`;
+                        // Actualizar la visualización del total
+                        const elementoTotal = document.getElementById("total");
+                        if (elementoTotal) {
+                        elementoTotal.innerHTML = `Total: $${totalProductos.toFixed(2)}`;
+                        }
+
+                        // Limpiar el campo de entrada
+                        document.getElementById("txtCodigo").value = "";
+
+                        break; // Salir del bucle una vez que se encuentra el producto
                     }
-
-                    // Limpiar el campo de entrada
-                    document.getElementById("txtCodigo").value = "";
-
-                    break; // Salir del bucle una vez que se encuentra el producto
                 }
             }
-        }
     }
+    // identificamos la tecla esc la cual elimina el ultimo producto si es que existe
+    else if (evento.key === "Escape") {
+        // alert ("se identifico Escape");
+        // var borra = document.getElementById("bdContenido");
+        // borra.removeChild(borra.lastChild);
+        const tabla = document.getElementById("bdContenido");
+            if (tabla.rows.length > 0) {
+            const ultimaFila = tabla.rows[tabla.rows.length - 1];
+            const totalCelda = ultimaFila.cells[3].innerText;
+            const totalValor = parseFloat(totalCelda.replace("$", ""));
+            totalProductos -= totalValor;
+            tabla.deleteRow(tabla.rows.length - 1);
+
+            // Actualizar la visualización del total
+            const elementoTotal = document.getElementById("total");
+            if (elementoTotal) {
+                elementoTotal.innerHTML = `Total: $${totalProductos.toFixed(2)}`;
+            }
+            }
+    } 
+
 }
 
 // Función para actualizar el precio total en la interfaz

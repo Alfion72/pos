@@ -115,7 +115,8 @@ th,h1,h2,tbody,td,tr{
     width: 30%;             /* Ocupa el 30% del ancho disponible */
     height: 5vw;            /* Altura = 5% del ancho de la pantalla (viewport width) */
     margin-left: auto;      /* Empuja el div hacia la derecha */
-    font-size: xx-large;    /* Texto muy grande */
+    font-size: x-large;    /* Texto muy grande */
     align-items: center;    /* Centra verticalmente el contenido */
     justify-content: center; /* Centra horizontalmente el contenido */
 }
+
