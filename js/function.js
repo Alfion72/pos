@@ -180,8 +180,45 @@ function buscarProductoPorCodigo(evento) {
             }
             }
     } 
+    //aumentar la cantidad del producto con tab
+    else if (evento.key === "Tab") {
+        evento.preventDefault();
+        // alert ("repetimos producto");
+        
+        var tabla = document.getElementById("bdContenido");
+    
+        // Verifica que existan productos en la tabla
+        if (tabla.rows.length > 0) {
+        // Obtiene la última fila de la tabla
+        var fila = tabla.rows[tabla.rows.length - 1];
 
+        // Suma la cantidad de producto en 1 del ultimo producto
+        var cantidad = parseInt(fila.cells[0].innerHTML) + 1;
+        fila.cells[0].innerHTML = cantidad;
+        
+        // Obtiene el precio unitario de la celda 3 (índice 2)
+        var precioUnitario = parseFloat(fila.cells[2].innerText.replace("$", ""));
+        
+        // Calcula el nuevo subtotal
+        var nuevoSubtotal = precioUnitario * cantidad;
+
+        // Actualiza la celda del subtotal (índice 3)
+        fila.cells[3].innerHTML = `$${nuevoSubtotal.toFixed(2)}`;
+        
+        // Suma el precio unitario al total general
+        totalProductos += precioUnitario;
+        totalProductos = Math.abs(totalProductos);
+
+        // Actualiza el total mostrado
+        actualizarPrecioTotal();
+        } else {
+            // Mensaje cuando no hay productos para eliminar
+            document.getElementById("txtCode").placeholder = "No hay productos ingresados.";
+        }
+    }
 }
+
+
 
 // Función para actualizar el precio total en la interfaz
 function actualizarPrecioTotal() {
