@@ -118,5 +118,6 @@ th,h1,h2,tbody,td,tr{
     font-size: x-large;    /* Texto muy grande */
     align-items: center;    /* Centra verticalmente el contenido */
     justify-content: center; /* Centra horizontalmente el contenido */
+    object-fit: cover;
 }
 
