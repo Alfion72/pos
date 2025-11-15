@@ -71,7 +71,7 @@ th,h1,h2,tbody,td,tr{
 }
 
 #btn1{
-    background-image: url(../img/img3.png);    /* Usa esta imagen como fondo */
+    background-image: url(../img/img4.png);    /* Usa esta imagen como fondo */
     background-size: 70%;     /* La imagen ocupa el 70% del botón */
     background-position: center;  /* Centra la imagen dentro del botón */
     background-repeat: no-repeat; /* No repite la imagen */
@@ -79,7 +79,7 @@ th,h1,h2,tbody,td,tr{
 }
 /* los demas botones son igual que el btn1 */
 #btn2{
-    background-image: url(../img/img4.png);    
+    background-image: url(../img/img7.png);    
     background-size: 70%;     
     background-position: center;     
     background-repeat: no-repeat;     
@@ -102,7 +102,7 @@ th,h1,h2,tbody,td,tr{
 }
 
 #btn5{
-    background-image: url(../img/img7.png);    
+    background-image: url(../img/img3.png);    
     background-size: 70%;     
     background-position: center;     
     background-repeat: no-repeat;     

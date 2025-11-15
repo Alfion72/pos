@@ -464,7 +464,52 @@ async function transferir() {
     }
 }
 
-// Función para pedir número de teléfono y confirmarlo
+// === 1) Ventana con botones de montos === //
+function seleccionarMontoRecarga() {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+                        display:flex;align-items:center;justify-content:center;z-index:9999;">
+                <div style="background:#3e4149;padding:20px;border-radius:10px;text-align:center;">
+                    <h3 style="color:white;">Seleccione un monto de recarga</h3>
+
+                    <div id="montoBtns" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px;">
+                        <button class="mBtn" data-val="20">$20</button>
+                        <button class="mBtn" data-val="30">$30</button>
+                        <button class="mBtn" data-val="50">$50</button>
+                        <button class="mBtn" data-val="100">$100</button>
+                        <button class="mBtn" data-val="150">$150</button>
+                        <button class="mBtn" data-val="200">$200</button>
+                    </div>
+
+                    <button id="cancelMonto" style="margin-top:15px;">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        // Eventos de botones
+        overlay.querySelectorAll(".mBtn").forEach(btn => {
+            btn.onclick = () => {
+                const monto = parseFloat(btn.dataset.val);
+                overlay.remove();
+                resolve(monto);
+            };
+        });
+
+        document.getElementById("cancelMonto").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+
+
+// === 2) Ventana para pedir y confirmar teléfono === //
 function promptRecargaTelefono() {
     const overlay = document.createElement('div');
     overlay.innerHTML = `
@@ -481,18 +526,6 @@ function promptRecargaTelefono() {
     `;
     document.body.appendChild(overlay);
     document.getElementById('numTelefono').focus();
-
-    // Control de teclas
-    document.getElementById('cnfTelefono').addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            document.getElementById('telOk').click();
-        }
-        if (event.key === "Escape") {
-            event.preventDefault();
-            document.getElementById('telReturn').click();
-        }
-    });
 
     return new Promise(resolve => {
         document.getElementById('telOk').onclick = () => {
@@ -513,63 +546,45 @@ function promptRecargaTelefono() {
     });
 }
 
-// Función principal de recarga
+
+
+// === 3) Función principal de recarga === //
 async function recargarTelefono() {
     var tabla = document.getElementById("bdContenido");
 
-    // Pedir confirmación de número
-    var telefono = await promptRecargaTelefono();
-    if (telefono) {
-        // Usamos el mismo input existente para el monto
-        const input = document.getElementById("txtCodigo");
-        input.placeholder = "Ingrese el monto de la recarga y presione Enter";
-        input.value = "";
+    // 1) Seleccionar monto primero
+    const monto = await seleccionarMontoRecarga();
+    if (!monto) return;
 
-        // Esperar que el usuario escriba y presione Enter
-        input.addEventListener("keydown", async function handler(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                let monto = parseFloat(input.value);
+    // 2) Pedir número de teléfono
+    const telefono = await promptRecargaTelefono();
+    if (!telefono) return;
 
-                if (isNaN(monto) || monto <= 0) {
-                    input.value = "";
-                    input.placeholder = "Monto inválido, intente de nuevo";
-                    return;
-                }
+    // 3) Insertar en tabla
+    const renglon = tabla.insertRow();
+    const celda1 = renglon.insertCell(0);
+    const celda2 = renglon.insertCell(1);
+    const celda3 = renglon.insertCell(2);
+    const celda4 = renglon.insertCell(3);
 
-                // Insertar registro en la tabla
-                const renglon = tabla.insertRow();
-                const celda1 = renglon.insertCell(0);
-                const celda2 = renglon.insertCell(1);
-                const celda3 = renglon.insertCell(2);
-                const celda4 = renglon.insertCell(3);
+    celda1.style.textAlign = "center";
+    celda2.style.textAlign = "center";
+    celda3.style.textAlign = "right";
+    celda4.style.textAlign = "right";
 
-                celda1.setAttribute("style", "text-align:center;");
-                celda2.setAttribute("style", "text-align:center;");
-                celda3.setAttribute("style", "text-align:right;");
-                celda4.setAttribute("style", "text-align:right;");
+    celda1.innerHTML = 1;
+    celda2.innerHTML = `Recarga a ${telefono}`;
+    celda3.innerHTML = `$${monto.toFixed(2)}`;
+    celda4.innerHTML = `$${monto.toFixed(2)}`;
 
-                celda1.innerHTML = 1;
-                celda2.innerHTML = `Recarga a ${telefono}`;
-                celda3.innerHTML = `$${monto.toFixed(2)}`;
-                celda4.innerHTML = `$${monto.toFixed(2)}`;
-
-                // Actualiza el total general
-                totalProductos += monto;
-                actualizarPrecioTotal();
-
-                // Restablece input
-                input.value = "";
-                input.placeholder = "Código del producto";
-
-                // Elimina el listener para no duplicar eventos
-                input.removeEventListener("keydown", handler);
-            }
-        });
-    }
+    // 4) Actualizar total
+    totalProductos += monto;
+    actualizarPrecioTotal();
 }
 
-// Detectar botón btn2 para recarga
+
+
+// === 4) Conectar con el botón btn2 === //
 document.addEventListener('DOMContentLoaded', function() {
     const btn2 = document.getElementById('btn2');
     if (btn2) {
@@ -577,6 +592,366 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function seleccionarServicio() {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+                        display:flex;align-items:center;justify-content:center;z-index:9999;">
+                <div style="background:#3e4149;padding:20px;border-radius:10px;text-align:center;">
+                    <h3 style="color:white;">Seleccione el servicio a pagar</h3>
+
+                    <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;">
+                        <button class="srvBtn" data-srv="Luz">Luz</button>
+                        <button class="srvBtn" data-srv="Agua">Agua</button>
+                        <button class="srvBtn" data-srv="Internet">Internet</button>
+                    </div>
+
+                    <button id="cancelSrv" style="margin-top:15px;">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelectorAll(".srvBtn").forEach(btn => {
+            btn.onclick = () => {
+                const servicio = btn.dataset.srv;
+                overlay.remove();
+                resolve(servicio);
+            };
+        });
+
+        document.getElementById("cancelSrv").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+function pedirDatosServicio(servicio) {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+                        display:flex;align-items:center;justify-content:center;z-index:9999;">
+                <div style="background:#3e4149;padding:20px;border-radius:10px;text-align:center;">
+                    <h3 style="color:white;">Pago de ${servicio}</h3>
+
+                    <input id="refServicio" placeholder="Número de contrato / referencia"
+                           style="width:90%;padding:8px;margin-bottom:10px;">
+
+                    <input id="montoServicio" placeholder="Monto a pagar"
+                           style="width:90%;padding:8px;margin-bottom:10px;">
+
+                    <br>
+                    <button id="srvOk">Aceptar</button>
+                    <button id="srvCancel">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.getElementById("refServicio").focus();
+
+        document.getElementById("srvOk").onclick = () => {
+            let ref = document.getElementById("refServicio").value.trim();
+            let monto = parseFloat(document.getElementById("montoServicio").value);
+
+            if (ref.length < 3) {
+                alert("Referencia inválida.");
+                return;
+            }
+
+            if (isNaN(monto) || monto <= 0) {
+                alert("Monto inválido.");
+                return;
+            }
+
+            overlay.remove();
+            resolve({ ref, monto });
+        };
+
+        document.getElementById("srvCancel").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+async function pagarServicio() {
+    const tabla = document.getElementById("bdContenido");
+
+    // 1) Seleccionar servicio
+    const servicio = await seleccionarServicio();
+    if (!servicio) return;
+
+    // 2) Pedir referencia y monto
+    const datos = await pedirDatosServicio(servicio);
+    if (!datos) return;
+
+    const { ref, monto } = datos;
+
+    // 3) Insertar en tabla
+    const renglon = tabla.insertRow();
+    const c1 = renglon.insertCell(0);
+    const c2 = renglon.insertCell(1);
+    const c3 = renglon.insertCell(2);
+    const c4 = renglon.insertCell(3);
+
+    c1.style.textAlign = "center";
+    c2.style.textAlign = "center";
+    c3.style.textAlign = "right";
+    c4.style.textAlign = "right";
+
+    c1.innerHTML = 1;
+    c2.innerHTML = `Pago de ${servicio} (Ref: ${ref})`;
+    c3.innerHTML = `$${monto.toFixed(2)}`;
+    c4.innerHTML = `$${monto.toFixed(2)}`;
+
+    // 4) Actualizar total de la venta
+    totalProductos += monto;
+    actualizarPrecioTotal();
+}
+
+// Conectar con el botón btn3
+document.addEventListener('DOMContentLoaded', function() {
+    const btn3 = document.getElementById('btn3');
+    if (btn3) btn3.addEventListener('click', pagarServicio);
+});
+
+
+// seccion paqueteria
+function seleccionarPaqueteria() {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                        background:rgba(0,0,0,0.5);display:flex;
+                        align-items:center;justify-content:center;z-index:9999;">
+                <div style="background:#3e4149;padding:20px;border-radius:10px;text-align:center;">
+                    <h3 style="color:white;">Seleccione el servicio de paquetería</h3>
+
+                    <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px;">
+                        <button class="paqBtn" data-paq="Temu">Temu</button>
+                        <button class="paqBtn" data-paq="Amazon">Amazon</button>
+                        <button class="paqBtn" data-paq="Mercado Libre">Mercado Libre</button>
+                    </div>
+
+                    <button id="cancelPaq" style="margin-top:15px;">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.querySelectorAll(".paqBtn").forEach(btn => {
+            btn.onclick = () => {
+                const paqueteria = btn.dataset.paq;
+                overlay.remove();
+                resolve(paqueteria);
+            };
+        });
+
+        document.getElementById("cancelPaq").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+//datos guia y monto
+function pedirDatosPaqueteria(paqueteria) {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="position:fixed;top:0;left:0;width:100%;height:100%;
+                        background:rgba(0,0,0,0.5);display:flex;
+                        align-items:center;justify-content:center;z-index:9999;">
+                <div style="background:#3e4149;padding:20px;border-radius:10px;text-align:center;">
+                    <h3 style="color:white;">Pago de Paquetería: ${paqueteria}</h3>
+
+                    <input id="refPaq" placeholder="Número de guía / referencia"
+                        style="width:90%;padding:8px;margin-bottom:10px;">
+
+                    <input id="montoPaq" placeholder="Monto a pagar"
+                        style="width:90%;padding:8px;margin-bottom:10px;">
+
+                    <br>
+                    <button id="paqOk">Aceptar</button>
+                    <button id="paqCancel">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.getElementById("refPaq").focus();
+
+        document.getElementById("paqOk").onclick = () => {
+            let ref = document.getElementById("refPaq").value.trim();
+            let monto = parseFloat(document.getElementById("montoPaq").value);
+
+            if (ref.length < 3) {
+                alert("Referencia inválida.");
+                return;
+            }
+
+            if (isNaN(monto) || monto <= 0) {
+                alert("Monto inválido.");
+                return;
+            }
+
+            overlay.remove();
+            resolve({ ref, monto });
+        };
+
+        document.getElementById("paqCancel").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+//funcion principal paqueteria
+async function pagarPaqueteria() {
+    const tabla = document.getElementById("bdContenido");
+
+    // 1) Seleccionar paquetería
+    const paqueteria = await seleccionarPaqueteria();
+    if (!paqueteria) return;
+
+    // 2) Solicitar referencia y monto
+    const datos = await pedirDatosPaqueteria(paqueteria);
+    if (!datos) return;
+
+    const { ref, monto } = datos;
+
+    // 3) Insertar en la tabla
+    const row = tabla.insertRow();
+    const c1 = row.insertCell(0);
+    const c2 = row.insertCell(1);
+    const c3 = row.insertCell(2);
+    const c4 = row.insertCell(3);
+
+    c1.style.textAlign = "center";
+    c2.style.textAlign = "center";
+    c3.style.textAlign = "right";
+    c4.style.textAlign = "right";
+
+    c1.innerHTML = 1;
+    c2.innerHTML = `Pago Paquetería ${paqueteria} (Guía: ${ref})`;
+    c3.innerHTML = `$${monto.toFixed(2)}`;
+    c4.innerHTML = `$${monto.toFixed(2)}`;
+
+    // 4) Actualizar total
+    totalProductos += monto;
+    actualizarPrecioTotal();
+}
+
+// Conectar con el botón btn4
+document.addEventListener('DOMContentLoaded', function() {
+    const btn4 = document.getElementById('btn4');
+    if (btn4) btn4.addEventListener('click', pagarPaqueteria);
+});
+
+function pedirDatosEnvioSucursal() {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+
+        overlay.innerHTML = `
+            <div style="
+                position:fixed; top:0; left:0; width:100%; height:100%;
+                background:rgba(0,0,0,0.5); display:flex;
+                align-items:center; justify-content:center; z-index:9999;">
+                
+                <div style="background:#3e4149; padding:20px; border-radius:10px; text-align:center;">
+                    
+                    <h3 style="color:white;">Envío de Dinero (Sucursal a Sucursal)</h3>
+
+                    <input id="nombreDest" placeholder="Nombre completo del destinatario"
+                        style="width:90%; padding:8px; margin-bottom:10px;">
+
+                    <input id="montoEnvio" placeholder="Monto a enviar"
+                        style="width:90%; padding:8px; margin-bottom:10px;">
+
+                    <br>
+                    <button id="envioOk">Aceptar</button>
+                    <button id="envioCancel">Cancelar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.getElementById("nombreDest").focus();
+
+        // Confirmar
+        document.getElementById("envioOk").onclick = () => {
+            let nombre = document.getElementById("nombreDest").value.trim();
+            let monto = parseFloat(document.getElementById("montoEnvio").value);
+
+            if (nombre.length < 5) {
+                alert("Escriba el nombre completo del destinatario.");
+                return;
+            }
+
+            if (isNaN(monto) || monto <= 0) {
+                alert("Monto inválido.");
+                return;
+            }
+
+            overlay.remove();
+            resolve({ nombre, monto });
+        };
+
+        // Cancelar
+        document.getElementById("envioCancel").onclick = () => {
+            overlay.remove();
+            resolve(false);
+        };
+    });
+}
+
+// Función principal de envío de dinero
+async function enviarDineroSucursal() {
+    const tabla = document.getElementById("bdContenido");
+
+    // 1) Pedir nombre y monto
+    const datos = await pedirDatosEnvioSucursal();
+    if (!datos) return;
+
+    const { nombre, monto } = datos;
+
+    // 2) Insertar en la tabla
+    const row = tabla.insertRow();
+    const c1 = row.insertCell(0);
+    const c2 = row.insertCell(1);
+    const c3 = row.insertCell(2);
+    const c4 = row.insertCell(3);
+
+    c1.style.textAlign = "center";
+    c2.style.textAlign = "center";
+    c3.style.textAlign = "right";
+    c4.style.textAlign = "right";
+
+    c1.innerHTML = 1;
+    c2.innerHTML = `Envío Sucursal-Sucursal (Destinatario: ${nombre})`;
+    c3.innerHTML = `$${monto.toFixed(2)}`;
+    c4.innerHTML = `$${monto.toFixed(2)}`;
+
+    // 3) Actualizar total general
+    totalProductos += monto;
+    actualizarPrecioTotal();
+}
+
+// Conectar con el botón btn5
+document.addEventListener('DOMContentLoaded', function() {
+    const btn5 = document.getElementById('btn5');
+    if (btn5) btn5.addEventListener('click', enviarDineroSucursal);
+});
 
 
 // Función para cancelar venta con pago (tecla P)
