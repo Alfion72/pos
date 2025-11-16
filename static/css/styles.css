@@ -36,6 +36,10 @@ th,h1,h2,tbody,td,tr{
     border: 1px solid black;     /* Borde negro de 1px alrededor */
 }
 
+.oculto {
+    display: none;
+}
+
 #listado{
     max-height: 50%;       /* Limita altura máxima de la tabla al 50% de su contenedor */
     width: 100%;           /* La tabla ocupa todo el ancho disponible */

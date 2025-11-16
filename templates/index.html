@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de venta</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+
+    <!-- imagen en la esquina superior izquierda -->
+    <img src="/static/img/img1.jpg" class="logoIzq">
+
+    <!-- titulo -->
+    <div class="titulo">
+        <div>
+            <h1 class="titulo1">Don Varaton</h1>
+            <h2 class="subtitulo1">No es bueno, pero es varato</h2>
+        </div>
+    </div>
+
+    <!-- imagen superior derecha -->
+    <img src="/static/img/img2.jpg" class="logoDer">
+
+    <!-- TABLA DE PRODUCTOS -->
+    <div class="listadoProductos">
+        <table border="0" id="listado">
+
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cant.</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody id="bdContenido">
+                <!-- productos agregados dinámicamente -->
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- INPUT PARA EL CÓDIGO -->
+    <input type="text" id="txtCodigo" autocomplete="off" class="escaner"
+        placeholder="Escanea el código de barras"/>
+
+    <!-- BOTONES -->
+    <div class="botones">
+        <input type="button" id="btn1" class="boton"/>
+        <input type="button" id="btn2" class="boton"/>
+        <input type="button" id="btn3" class="boton"/>
+        <input type="button" id="btn4" class="boton"/>
+        <input type="button" id="btn5" class="boton"/>
+
+        <div class="total">
+            <h1 id="txtTotal">0.00</h1>
+        </div>
+    </div>
+    <!-- MENSAJE DE ERROR (DEBE IR ARRIBA PARA QUE SE VEA RÁPIDO) -->
+    <div id="error" style="
+        color: red;
+        font-weight: bold;
+        padding: 5px;
+        height: 20px;
+        margin: 10px;
+    "></div>
+    <!-- SCRIPT SIEMPRE AL FINAL -->
+    <script src="/static/js/function.js"></script>
+
+</body>
+</html>
+
